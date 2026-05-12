@@ -39,4 +39,33 @@ class PartnerController extends Controller
     {
         return view('admin.partners.create');
     }
+
+    // Menampilkan form edit
+    public function edit(Partner $partner)
+    {
+        return view('admin.partners.edit', compact('partner'));
+    }
+
+    // Memproses update data
+    public function update(Request $request, Partner $partner)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'logo_url' => 'required|url',
+        ]);
+
+        $partner->update([
+            'name' => $request->name,
+            'logo_url' => $request->logo_url,
+        ]);
+
+        return redirect()->route('admin.partners.index')->with('success', 'Data partner berhasil diperbarui!');
+    }
+
+    // Menghapus data
+    public function destroy(Partner $partner)
+    {
+        $partner->delete();
+        return redirect()->route('admin.partners.index')->with('success', 'Partner berhasil dihapus!');
+    }
 }

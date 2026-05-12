@@ -38,15 +38,20 @@
                                     class="h-12 w-12 object-cover rounded border border-gray-200">
                             </td>
                             <td class="p-4 flex gap-2 justify-center">
-                                {{-- Placeholder untuk fitur Edit/Hapus jika diperlukan --}}
-                                <button
-                                    class="bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1.5 rounded text-sm font-semibold">
+                                <a href="{{ route('admin.partners.edit', $partner->id) }}"
+                                    class="bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1.5 rounded text-sm font-semibold hover:bg-blue-600 hover:text-white transition">
                                     Edit
-                                </button>
-                                <button
-                                    class="bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded text-sm font-semibold">
-                                    Hapus
-                                </button>
+                                </a>
+
+                                <form action="{{ route('admin.partners.destroy', $partner->id) }}" method="POST"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus partner ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded text-sm font-semibold hover:bg-red-600 hover:text-white transition">
+                                        Hapus
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
