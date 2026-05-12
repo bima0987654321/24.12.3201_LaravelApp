@@ -11,7 +11,7 @@ class Event extends Model
         'location', 'price', 'stock', 'poster_path'
        ];
 
-    
+
     public function category()
     {
         return $this->belongsTo(Category::class);
