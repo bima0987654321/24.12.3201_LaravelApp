@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data dari tabel partners 
-        $partners = Partner::all();
+        $search = $request->query('search', '');
+        
+        if ($search) {
+            $partners = Partner::where('name', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            $partners = Partner::all();
+        }
 
-        // Mengirim data ke view index di folder admin/partners 
-        return view('admin.partners.index', compact('partners'));
+        return view('admin.partners.index', compact('partners', 'search'));
     }
 
     public function store(Request $request)
