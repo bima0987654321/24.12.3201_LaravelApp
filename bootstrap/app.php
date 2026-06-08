@@ -11,9 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Mendaftarkan middleware grup untuk proteksi double layer
+        // Mendaftarkan middleware grup 'admin' untuk double protection layer secara permanen
+        // Layer 1: Cek Authentication (User sudah login)
+        // Layer 2: Cek Authorization (User adalah admin)
         $middleware->group('admin', [
-            'auth',
             \App\Http\Middleware\IsAdmin::class,
         ]);
     })

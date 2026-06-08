@@ -17,6 +17,14 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
+        // Akun User Biasa (untuk testing non-admin access)
+        \App\Models\User::create([
+            'name' => 'Budi User',
+            'email' => 'user@amikom.ac.id',
+            'password' => bcrypt('password'),
+            'role' => 'user',
+        ]);
+
         // Kategori
         $seminar = \App\Models\Category::create([
             'name' => 'Seminar IT',

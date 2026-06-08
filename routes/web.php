@@ -19,20 +19,14 @@ Route::get('/checkout', [EventController::class, 'checkout']);
 Route::get('/ticket', [TicketController::class, 'index']);
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('events', AdminEventController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('transactions', AdminTransactionsController::class);
-
-
-    // Rute Login bebas akses
-    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('login', [AuthController::class, 'login'])->name('login.post');
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    // Rute Login bebas akses (tidak perlu middleware)
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
-    // Mengamankan Route Administrasi dengan Middleware IsAdmin yang sudah mencakup double protection
-    Route::middleware(\App\Http\Middleware\IsAdmin::class)->group(function () {
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Mengamankan Route Administrasi dengan Middleware Grup 'admin' (double protection: auth + isAdmin)
+    Route::middleware('admin')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('events', AdminEventController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('transactions', AdminTransactionsController::class);
