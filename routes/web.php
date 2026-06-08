@@ -8,11 +8,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
-<<<<<<< Updated upstream
-=======
+
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\AuthController;
->>>>>>> Stashed changes
+
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/event-detail', [EventController::class, 'show']);
@@ -20,13 +19,12 @@ Route::get('/checkout', [EventController::class, 'checkout']);
 Route::get('/ticket', [TicketController::class, 'index']);
 
 Route::prefix('admin')->name('admin.')->group(function () {
-<<<<<<< Updated upstream
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('events', AdminEventController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('transactions', AdminTransactionsController::class);
-});
-=======
+
+
     // Rute Login bebas akses
     Route::get('login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login.post');
@@ -41,4 +39,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('partners', PartnerController::class);
     });
 });
->>>>>>> Stashed changes
+
